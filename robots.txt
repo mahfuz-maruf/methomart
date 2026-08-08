@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://me-tho.github.io/methomart/sitemap.xml

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>পণ্যের রিভিউ ও রেটিং — MethoMart</title>
+<meta name="description" content="MethoMart-এর পণ্য নিয়ে ক্রেতাদের রিভিউ ও রেটিং পড়ুন, অথবা আপনার নিজের অভিজ্ঞতা শেয়ার করুন।">
+<link rel="canonical" href="https://me-tho.github.io/methomart/reviews.html">
+<meta property="og:title" content="পণ্যের রিভিউ ও রেটিং — MethoMart">
+<meta property="og:description" content="MethoMart-এর পণ্য নিয়ে ক্রেতাদের রিভিউ ও রেটিং পড়ুন, অথবা আপনার নিজের অভিজ্ঞতা শেয়ার করুন।">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://me-tho.github.io/methomart/reviews.html">
+
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1F3D2B">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;600;700;800&family=Noto+Serif+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#1F3D2B; --forest-dark:#152A1D; --gold:#D4A017; --gold-light:#E8C158;
+    --ivory:#FBF6EC; --card:#F3ECDA; --maroon:#7A3B2E; --charcoal:#2B2B25; --muted:#6B6B5D;
+    --line:#DFD5B8; --radius:18px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Noto Serif Bengali', serif; background:var(--ivory); color:var(--charcoal); line-height:1.6;}
+  h1,h2,h3,.brand{font-family:'Baloo Da 2', sans-serif;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:800px; margin:0 auto; padding:0 24px;}
+
+  header{position:sticky; top:0; z-index:100; background:var(--forest); box-shadow:0 2px 12px rgba(0,0,0,.12);}
+  nav{display:flex; align-items:center; justify-content:space-between; padding:14px 24px; max-width:1120px; margin:0 auto;}
+  .brand{color:var(--ivory); font-size:1.25rem; font-weight:800; display:flex; align-items:center; gap:8px;}
+  .brand .leaf{color:var(--gold);}
+  .nav-links{position:absolute; top:100%; left:0; right:0; background:var(--forest); flex-direction:column; padding:10px 24px 20px; display:none; gap:14px; list-style:none; z-index:150;}
+  .nav-links.open{display:flex;}
+  .nav-links a{color:#E7E1CC; font-weight:600; font-size:.95rem; padding:6px 2px;}
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--gold-light); outline:none;}
+  .nav-toggle{display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); color:var(--ivory); font-size:1.4rem; width:40px; height:40px; border-radius:50%; cursor:pointer;}
+
+  main{padding:40px 0 90px;}
+  .page-head{text-align:center; margin-bottom:30px;}
+  .page-head .kicker{color:var(--maroon); font-weight:700; font-size:.8rem; letter-spacing:1.5px; text-transform:uppercase;}
+  .page-head h1{font-size:clamp(1.6rem,3.5vw,2.2rem); margin-top:8px; color:var(--forest);}
+  .page-head p{color:var(--muted); margin-top:10px; font-size:.95rem;}
+
+  .card-box{background:#fffdf7; border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:0 10px 26px rgba(31,61,43,.06); margin-bottom:24px;}
+  .field{display:flex; flex-direction:column; gap:5px; margin-bottom:14px;}
+  .field label{font-size:.85rem; font-weight:700; color:#4a4a3a;}
+  .field input, .field select, .field textarea{padding:11px 12px; border:1.5px solid #ddd5b8; border-radius:8px; font-size:.95rem; font-family:inherit; background:#fff;}
+  .field small{color:#999; font-size:.78rem;}
+
+  .product-summary{display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding:14px 16px; background:var(--card); border-radius:12px; margin-bottom:16px;}
+  .product-summary .psum-name{font-weight:800; color:var(--forest-dark); font-size:1.05rem; flex:1; min-width:160px;}
+  .psum-stars{color:var(--gold); font-size:1.15rem; letter-spacing:2px;}
+  .psum-count{color:var(--muted); font-size:.82rem;}
+
+  .star-input{display:flex; gap:6px; font-size:1.8rem; color:#ddd5b8; cursor:pointer; user-select:none;}
+  .star-input .star{transition:color .12s, transform .12s;}
+  .star-input .star.filled{color:var(--gold);}
+  .star-input .star:hover{transform:scale(1.12);}
+
+  .mm-btn{width:100%; padding:12px; border:none; border-radius:999px; background:var(--forest-dark); color:#fff; font-weight:700; font-size:.95rem; cursor:pointer; margin-top:6px; transition:background .2s;}
+  .mm-btn:hover{background:#2a4d38;}
+  .mm-btn:disabled{opacity:.6; cursor:not-allowed;}
+  .mm-btn.secondary{background:none; border:1.5px solid var(--forest-dark); color:var(--forest-dark);}
+  .mm-msg{font-size:.85rem; padding:9px 11px; border-radius:8px; margin-bottom:12px; display:none;}
+  .mm-msg.error{display:block; background:#fbe4e2; color:#a3352e;}
+  .mm-msg.success{display:block; background:#e3f2e1; color:#2b6b2f;}
+
+  .review-gate{background:var(--card); border-radius:12px; padding:16px; text-align:center;}
+  .review-gate p{color:#4a4a3a; font-size:.9rem; margin-bottom:12px; line-height:1.55;}
+  .verified-as{font-size:.85rem; color:#2b6b2f; font-weight:700; margin-bottom:14px; background:#e3f2e1; padding:8px 12px; border-radius:8px; display:inline-block;}
+  .verified-badge{color:#2b6b2f; font-size:.72rem; font-weight:700; background:#e3f2e1; padding:2px 8px; border-radius:999px; white-space:nowrap;}
+
+  .review-list{display:flex; flex-direction:column; gap:14px;}
+  .review-item{border:1px solid #f0ead2; border-radius:12px; padding:14px 16px; background:#fff;}
+  .review-item .ri-top{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:6px;}
+  .review-item .ri-name{font-weight:700; color:var(--forest-dark); font-size:.92rem;}
+  .review-item .ri-stars{color:var(--gold); font-size:.95rem; letter-spacing:1px;}
+  .review-item .ri-date{color:#aaa; font-size:.75rem;}
+  .review-item .ri-comment{color:#4a4a3a; font-size:.9rem; line-height:1.55;}
+  .empty-msg{text-align:center; color:#999; padding:24px 0; font-size:.9rem;}
+
+  .section-title{font-size:1.05rem; font-weight:700; color:var(--forest); margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+  .section-title::after{content:""; flex:1; height:1px; background:var(--line);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand"><span class="leaf">🌿</span> MethoMart</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">← হোমে ফিরুন</a></li>
+      <li><a href="index.html#products">পণ্যসমূহ</a></li>
+      <li><a href="reviews.html">⭐ রিভিউ ও রেটিং</a></li>
+      <li><a href="account.html">👤 আমার অ্যাকাউন্ট</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="মেনু খুলুন" aria-expanded="false">☰</button>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="kicker">ক্রেতাদের মতামত</span>
+      <h1>পণ্যের রিভিউ ও রেটিং</h1>
+      <p>একটা পণ্য বেছে নিন, অন্যদের রিভিউ পড়ুন অথবা নিজের অভিজ্ঞতা শেয়ার করুন।</p>
+    </div>
+
+    <div class="card-box">
+      <div class="field">
+        <label for="productSelect">পণ্য বেছে নিন</label>
+        <input type="text" id="productSearchBox" list="productDatalist" placeholder="পণ্যের নাম লিখুন বা তালিকা থেকে বেছে নিন" autocomplete="off">
+        <datalist id="productDatalist"></datalist>
+        <small>যেমন: খাঁটি সরিষা ফুলের মধু, খেজুর (আজওয়া) ইত্যাদি</small>
+      </div>
+
+      <div id="productSummary" class="product-summary" style="display:none;">
+        <span class="psum-name" id="psumName"></span>
+        <span class="psum-stars" id="psumStars"></span>
+        <span class="psum-count" id="psumCount"></span>
+      </div>
+    </div>
+
+    <div class="card-box" id="reviewFormBox" style="display:none;">
+      <div class="section-title">আপনার রিভিউ লিখুন</div>
+      <div class="mm-msg" id="reviewMsg"></div>
+
+      <!-- লগইন করা নেই -->
+      <div id="reviewLoginNotice" class="review-gate" style="display:none;">
+        <p>রিভিউ দিতে হলে প্রথমে লগইন করুন।</p>
+        <a href="account.html" class="mm-btn" style="display:block; text-align:center; text-decoration:none;">লগইন করুন</a>
+      </div>
+
+      <!-- লগইন করা আছে কিন্তু এই পণ্য ডেলিভারি পাননি -->
+      <div id="reviewNotEligibleNotice" class="review-gate" style="display:none;">
+        <p>শুধুমাত্র যারা এই পণ্যটা অর্ডার করে ডেলিভারি পেয়েছেন তারাই রিভিউ দিতে পারবেন। অর্ডার ডেলিভার হওয়ার পর এখানে ফিরে এসে রিভিউ দিন।</p>
+        <a href="account.html" class="mm-btn secondary" style="display:block; text-align:center; text-decoration:none;">আমার অর্ডার দেখুন</a>
+      </div>
+
+      <!-- রিভিউ ফর্ম (যাচাইকৃত ক্রেতার জন্য) -->
+      <div id="reviewFormFields" style="display:none;">
+        <p class="verified-as">✓ <span id="verifiedAsName"></span> হিসেবে রিভিউ দিচ্ছেন — যাচাইকৃত ক্রয়</p>
+        <div class="field">
+          <label>রেটিং</label>
+          <div class="star-input" id="starInput" role="radiogroup" aria-label="রেটিং দিন">
+            <span class="star" data-val="1">★</span>
+            <span class="star" data-val="2">★</span>
+            <span class="star" data-val="3">★</span>
+            <span class="star" data-val="4">★</span>
+            <span class="star" data-val="5">★</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>মন্তব্য</label>
+          <textarea id="reviewComment" rows="3" placeholder="পণ্যটা সম্পর্কে আপনার অভিজ্ঞতা লিখুন..."></textarea>
+        </div>
+        <button class="mm-btn" id="submitReviewBtn">রিভিউ জমা দিন</button>
+      </div>
+    </div>
+
+    <div class="card-box" id="reviewListBox" style="display:none;">
+      <div class="section-title">সব রিভিউ</div>
+      <div id="reviewList" class="review-list"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+
+  const API_URL = 'https://script.google.com/macros/s/AKfycbx5IeM7bh7obtu61EzNuoFRnZ-8LKmvIovx0cZFWI6-miKu3W8YVljZIW5fuZa_Ku6d8Q/exec';
+  async function api(action, data) {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action, ...data })
+    });
+    return res.json();
+  }
+  function getToken() { return localStorage.getItem('mm_token'); }
+
+  // ---------- পণ্য তালিকা (index.html-এর সাথে মিলিয়ে রাখা) ----------
+  const PRODUCTS = [{"id": "P1", "name": "খাঁটি সরিষা ফুলের মধু", "category": "মধু"}, {"id": "P2", "name": "খাঁটি কালোজিরা ফুলের মধু", "category": "মধু"}, {"id": "P3", "name": "সুন্দরবনের খলিসা মধু", "category": "মধু"}, {"id": "P26", "name": "বরই ফুলের মধু", "category": "মধু"}, {"id": "P27", "name": "সরিষা ফুলের মধু", "category": "মধু"}, {"id": "P30", "name": "লিচু ফুলের মধু", "category": "মধু"}, {"id": "P31", "name": "কালোজিরা ফুলের মধু", "category": "মধু"}, {"id": "P32", "name": "সুন্দরবন চাকের মধু", "category": "মধু"}, {"id": "P4", "name": "মহাস্থানের কটকটি", "category": "মিষ্টান্ন"}, {"id": "P5", "name": "তিলের নাড়ু", "category": "মিষ্টান্ন"}, {"id": "P6", "name": "আমের আচার", "category": "আচার"}, {"id": "P7", "name": "রসুনের আচার", "category": "আচার"}, {"id": "P8", "name": "মরিচের আচার", "category": "আচার"}, {"id": "P9", "name": "খেজুর (আজওয়া)", "category": "খেজুর"}, {"id": "P10", "name": "খেজুর (মরিয়ম)", "category": "খেজুর"}, {"id": "P11", "name": "খাঁটি সরিষার তেল", "category": "তেল ও ঘি"}, {"id": "P12", "name": "ভার্জিন নারিকেল তেল", "category": "তেল ও ঘি"}, {"id": "P13", "name": "মাঘী ঘানি সরিষার তেল", "category": "তেল ও ঘি"}, {"id": "P14", "name": "মাঘী-শেতি ঘানি সরিষার তেল", "category": "তেল ও ঘি"}, {"id": "P15", "name": "মেশিনে ভাঙানো সরিষার তেল", "category": "তেল ও ঘি"}, {"id": "P16", "name": "নারকেল তেল (ঘানি ভাঙানো)", "category": "তেল ও ঘি"}, {"id": "P17", "name": "নারকেল তেল (মেশিন)", "category": "তেল ও ঘি"}, {"id": "P18", "name": "কালোজিরার তেল", "category": "তেল ও ঘি"}, {"id": "P19", "name": "তিলের তেল", "category": "তেল ও ঘি"}, {"id": "P23", "name": "ক্রিম ঘী", "category": "তেল ও ঘি"}, {"id": "P25", "name": "সর+মাখন ঘী", "category": "তেল ও ঘি"}, {"id": "P34", "name": "যবের চাউল", "category": "চাউল ও ছাতু"}, {"id": "P35", "name": "ভুরার চাউল", "category": "চাউল ও ছাতু"}, {"id": "P36", "name": "যবের ছাতু (তালবিনা) — লুজ", "category": "চাউল ও ছাতু"}, {"id": "P37", "name": "যবের ছাতু (তালবিনা) — জার", "category": "চাউল ও ছাতু"}, {"id": "P38", "name": "লাল আটা", "category": "চাউল ও ছাতু"}, {"id": "P39", "name": "বিটরুট পাউডার", "category": "মসলা"}, {"id": "P40", "name": "সজনে পাতার গুড়া", "category": "মসলা"}, {"id": "P42", "name": "হলুদের গুড়া", "category": "মসলা"}, {"id": "P43", "name": "মরিচের গুড়া (মিশ্র)", "category": "মসলা"}, {"id": "P44", "name": "মরিচের গুড়া (ইন্ডিয়ান)", "category": "মসলা"}, {"id": "P45", "name": "ধনিয়া পাতার গুড়া", "category": "মসলা"}, {"id": "P46", "name": "জিরার গুড়া", "category": "মসলা"}, {"id": "P47", "name": "ঢেঁকিছাটা হলুদের গুঁড়া", "category": "মসলা"}, {"id": "P48", "name": "ঢেঁকিছাটা মরিচের গুঁড়া", "category": "মসলা"}, {"id": "P49", "name": "ঢেঁকিছাটা ধনিয়ার গুঁড়া", "category": "মসলা"}, {"id": "P50", "name": "ঢেঁকিছাটা জিরার গুড়া", "category": "মসলা"}, {"id": "P51", "name": "শাহী মশলা", "category": "মসলা"}, {"id": "P52", "name": "শাহী মশলা", "category": "মসলা"}, {"id": "P53", "name": "খেজুরের দানা গুড় (বৃহত্তর যশোর)", "category": "গুড়"}, {"id": "P56", "name": "খেজুরের বক্স পাটালি (বৃহত্তর যশোর)", "category": "গুড়"}, {"id": "P58", "name": "আখের গুড়", "category": "গুড়"}, {"id": "P59", "name": "আখের পাটালি", "category": "গুড়"}, {"id": "P60", "name": "লাল চিনি (হাতে বানানো)", "category": "গুড়"}, {"id": "P61", "name": "লাল মুড়ি (আমন ধানের)", "category": "মুড়ি"}, {"id": "P62", "name": "সাদা মুড়ি (স্বর্ণ ধানের)", "category": "মুড়ি"}, {"id": "P64", "name": "লাচ্ছা সেমাই (প্রিমিয়াম)", "category": "সেমাই"}]
+;
+
+  const searchBox = document.getElementById('productSearchBox');
+  const datalist = document.getElementById('productDatalist');
+  PRODUCTS.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.name;
+    opt.dataset.id = p.id;
+    datalist.appendChild(opt);
+  });
+
+  let currentProduct = null;
+
+  function findProductByName(name) {
+    return PRODUCTS.find(p => p.name === name) || null;
+  }
+
+  async function selectProduct(product) {
+    currentProduct = product;
+    document.getElementById('reviewFormBox').style.display = 'block';
+    document.getElementById('reviewListBox').style.display = 'block';
+    resetStarInput();
+    document.getElementById('reviewMsg').className = 'mm-msg';
+    await loadReviews(product.id, product.name);
+    await updateReviewGate(product.id);
+  }
+
+  // লগইন করা আছে কিনা এবং এই পণ্য ডেলিভারি পেয়েছেন কিনা যাচাই করে ফর্ম/বার্তা দেখানো হয়
+  async function updateReviewGate(productId) {
+    const loginNotice = document.getElementById('reviewLoginNotice');
+    const notEligibleNotice = document.getElementById('reviewNotEligibleNotice');
+    const formFields = document.getElementById('reviewFormFields');
+    loginNotice.style.display = 'none';
+    notEligibleNotice.style.display = 'none';
+    formFields.style.display = 'none';
+
+    const token = getToken();
+    if (!token) { loginNotice.style.display = 'block'; return; }
+
+    try {
+      const r = await api('checkCanReview', { token, product_id: productId });
+      if (!r.ok || !r.loggedIn) { loginNotice.style.display = 'block'; return; }
+      if (!r.canReview) { notEligibleNotice.style.display = 'block'; return; }
+      document.getElementById('verifiedAsName').textContent = r.name || '';
+      formFields.style.display = 'block';
+    } catch (e) {
+      loginNotice.style.display = 'block';
+    }
+  }
+
+  searchBox.addEventListener('change', () => {
+    const p = findProductByName(searchBox.value.trim());
+    if (p) selectProduct(p);
+  });
+
+  // URL-এ ?product=P1 দিয়ে সরাসরি লিংক করা যাবে (যেমন হোমপেজ থেকে "রিভিউ দেখুন" লিংক)
+  (function initFromQuery() {
+    const params = new URLSearchParams(location.search);
+    const pid = params.get('product');
+    if (pid) {
+      const p = PRODUCTS.find(x => x.id === pid);
+      if (p) { searchBox.value = p.name; selectProduct(p); }
+    }
+  })();
+
+  function renderStars(avg) {
+    const rounded = Math.round(avg * 2) / 2;
+    let out = '';
+    for (let i = 1; i <= 5; i++) {
+      if (rounded >= i) out += '★';
+      else if (rounded >= i - 0.5) out += '⯨';
+      else out += '☆';
+    }
+    return out;
+  }
+
+  async function loadReviews(productId, productName) {
+    const listEl = document.getElementById('reviewList');
+    listEl.innerHTML = '<p class="empty-msg">লোড হচ্ছে...</p>';
+    const summaryEl = document.getElementById('productSummary');
+    summaryEl.style.display = 'flex';
+    document.getElementById('psumName').textContent = productName;
+    document.getElementById('psumStars').textContent = '...';
+    document.getElementById('psumCount').textContent = '';
+
+    const r = await api('getReviews', { product_id: productId });
+    if (!r.ok) { listEl.innerHTML = '<p class="empty-msg">রিভিউ লোড করা যায়নি</p>'; return; }
+    const reviews = r.reviews || [];
+
+    if (!reviews.length) {
+      document.getElementById('psumStars').textContent = renderStars(0);
+      document.getElementById('psumCount').textContent = 'এখনও কোনো রিভিউ নেই';
+      listEl.innerHTML = '<p class="empty-msg">এই পণ্যের জন্য এখনও কোনো রিভিউ নেই — প্রথম রিভিউটা আপনিই দিন!</p>';
+      return;
+    }
+
+    const avg = reviews.reduce((s, r) => s + Number(r.rating), 0) / reviews.length;
+    document.getElementById('psumStars').textContent = renderStars(avg);
+    document.getElementById('psumCount').textContent = `${avg.toFixed(1)} (${reviews.length}টি রিভিউ)`;
+
+    const fmtDate = d => {
+      if (!d) return '';
+      const dt = new Date(d);
+      if (isNaN(dt)) return '';
+      return dt.toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' });
+    };
+
+    listEl.innerHTML = reviews.slice().reverse().map(rv => `
+      <div class="review-item">
+        <div class="ri-top">
+          <span class="ri-name">${(rv.name || 'ক্রেতা').replace(/</g,'&lt;')} ${rv.verified ? '<span class="verified-badge">✓ যাচাইকৃত ক্রয়</span>' : ''}</span>
+          <span class="ri-date">${fmtDate(rv.date)}</span>
+        </div>
+        <div class="ri-stars">${'★'.repeat(rv.rating)}${'☆'.repeat(5 - rv.rating)}</div>
+        ${rv.comment ? `<p class="ri-comment">${String(rv.comment).replace(/</g,'&lt;')}</p>` : ''}
+      </div>
+    `).join('');
+  }
+
+  // ---------- স্টার ইনপুট ----------
+  let selectedRating = 0;
+  const starInput = document.getElementById('starInput');
+  function resetStarInput() {
+    selectedRating = 0;
+    starInput.querySelectorAll('.star').forEach(s => s.classList.remove('filled'));
+  }
+  starInput.querySelectorAll('.star').forEach(star => {
+    star.addEventListener('click', () => {
+      selectedRating = Number(star.dataset.val);
+      starInput.querySelectorAll('.star').forEach(s => {
+        s.classList.toggle('filled', Number(s.dataset.val) <= selectedRating);
+      });
+    });
+  });
+
+  document.getElementById('submitReviewBtn').addEventListener('click', async () => {
+    const msgEl = document.getElementById('reviewMsg');
+    if (!currentProduct) return;
+    const comment = document.getElementById('reviewComment').value.trim();
+    if (!selectedRating) { msgEl.className = 'mm-msg error'; msgEl.textContent = 'কতো স্টার দিতে চান বেছে নিন'; return; }
+    const btn = document.getElementById('submitReviewBtn');
+    btn.disabled = true; btn.textContent = 'জমা হচ্ছে...';
+    try {
+      const r = await api('addReview', {
+        token: getToken() || '',
+        product_id: currentProduct.id,
+        product_name: currentProduct.name,
+        rating: selectedRating,
+        comment
+      });
+      btn.disabled = false; btn.textContent = 'রিভিউ জমা দিন';
+      if (r.ok) {
+        msgEl.className = 'mm-msg success'; msgEl.textContent = 'ধন্যবাদ! আপনার রিভিউ যোগ হয়েছে।';
+        document.getElementById('reviewComment').value = '';
+        resetStarInput();
+        await loadReviews(currentProduct.id, currentProduct.name);
+      } else {
+        msgEl.className = 'mm-msg error'; msgEl.textContent = r.error || 'রিভিউ জমা দেওয়া যায়নি';
+        // এলিজিবিলিটি বদলে গিয়ে থাকতে পারে (যেমন টোকেন মেয়াদোত্তীর্ণ) — গেট আবার চেক করা হচ্ছে
+        await updateReviewGate(currentProduct.id);
+      }
+    } catch (e) {
+      btn.disabled = false; btn.textContent = 'রিভিউ জমা দিন';
+      msgEl.className = 'mm-msg error'; msgEl.textContent = 'সার্ভার এরর, আবার চেষ্টা করুন';
+    }
+  });
+
+  // ---------- PWA সার্ভিস ওয়ার্কার ----------
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+</script>
+
+</body>
+</html>
